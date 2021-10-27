@@ -1,0 +1,44 @@
+<!-- 引入要用的函数 -->
+<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">服务机器人</view>
+</cu-custom>
+
+<view class="cu-chat" id="chatView">
+  <!-- 自己 -->
+  <view wx:for="{{record}}" wx:key="from">
+    <view wx:if="{{item.sender=='self'}}" class="cu-item self">
+      <view class="main" style="display: block;">
+        <view class="margin-tb-xs text-grey">{{item.sender}}</view>
+        <view class="content bg-orange shadow">
+          <text>{{item.message}}</text>
+        </view>
+      </view>
+      <view class="cu-avatar radius margin-tb-sm"
+        style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+      <view class="date"> {{item.date}}</view>
+    </view>
+    <!-- 对方 -->
+    <view wx:else class=" padding-tb-xs cu-item">
+      <view class="cu-avatar radius margin-tb-sm"
+        style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></view>
+      <view class="main" style="display: block;">
+        <view class="margin-tb-xs text-grey">{{item.sender}}</view>
+        <view class="content shadow">
+          <text>{{item.message}}</text>
+        </view>
+      </view>
+      <view class="date"> {{item.date}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom:{{InputBottom}}px">
+  <view class="action">
+    <text class="cuIcon-sound text-grey"></text>
+  </view>
+  <input id="input" type="text" class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" bindinput="InputIn"
+    adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" value="{{inputValue}}"></input>
+  <button class="cu-btn bg-pink shadow" bindtap="sendMessage" style="width: 30vw;"
+    disabled="{{buttonDisable}}">发送</button>
+</view>

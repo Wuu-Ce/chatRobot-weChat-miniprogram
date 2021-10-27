@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/chat/chatPage",
+    "pages/collection/collection",
+    "pages/user/user",
+    "pages/index/index",
+    "pages/logs/logs"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

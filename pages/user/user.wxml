@@ -1,0 +1,49 @@
+<!--pages/user/user.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">个人中心</view>
+  <view slot="content">个人中心</view>
+</cu-custom>
+<view class="cu-card shadow">
+  <view class="margin-lr-xs cu-item shadow">
+    <view class="cu-list menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatarUrl}});"></view>
+        <view class="content flex-sub">
+          <view class="text-grey">{{userInfo.nickName}}</view>
+          <view wx:if="{{userInfo.gender}}" class="text-gray text-sm flex justify-between">
+            {{userInfo.gender}}
+            <view class="text-gray text-sm">
+              <text class="cuIcon-attentionfill margin-lr-xs"></text> 10
+              <text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
+              <text class="cuIcon-messagefill margin-lr-xs"></text> 30
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="cu-list menu">
+  <view class="cu-item">
+    <button class="cu-btn bg-white  padding-lr-sm" style="width:100%;justify-content: space-between;" bindtap="TocollectionPage">
+      <view>
+      <text class="cuIcon-crownfill text-blue margin-lr-sm"></text>
+      <text class="text-grey text-lg">收藏</text>
+      </view>
+      <view class="action">
+        <view class="cu-tag round bg-cyan light margin-lr-sm">19条</view>
+        <text class="cuIcon-right text-cyan"></text>
+      </view>
+    </button>
+  </view>
+</view>
+<view class="cu-list menu margin-tb-xl" style="margin-top:50rpx ;">
+  <view class="cu-item" style="padding: 0;">
+    <button class="cu-btn  text-orange text-lg bg-white" style="width:100%;" bindtap="logout">
+      退出登录
+    </button>
+  </view>
+</view>

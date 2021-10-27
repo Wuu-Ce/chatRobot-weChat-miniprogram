@@ -1,0 +1,23 @@
+<!--pages/main/main.wxml-->
+
+<view class="flex flex-direction padding justify-around align-center mainView">
+  <cover-view style="margin-top:16vh;">
+    <cover-view class="text-orange text-bold" style="font-size: 27px;">高考志愿智能服务系统</cover-view>
+  </cover-view>
+  <view class="flex flex-direction justify-center margin-lg" style="width: 90%;">
+    <button class="cu-btn lg bg-orange margin  margin-tb-lg" style="width: 100%;border: 2px solid orange;" bindtap="toChatPage">
+      <text class="cuIcon-community basis-xs"></text>
+      <text class="basis-lg">聊天问答</text>
+      <text class="cuIcon-right basis-xs"></text>
+    </button>
+    <button class="cu-btn xl bg-orange margin-tb-lg line-orange" style="width: 100%;border: 2px solid orange;"
+      bindtap="toUserPage">
+      <text class="cuIcon-my basis-xs"></text>
+      <text class="basis-xl">个人中心</text>
+      <text class="cuIcon-right basis-xs"></text>
+    </button>
+  </view>
+</view>
+<view>
+  <canvas  type="2d" id="mainCanvas" class="bg"></canvas>
+</view>
