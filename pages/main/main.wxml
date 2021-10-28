@@ -5,7 +5,7 @@
     <cover-view class="text-orange text-bold" style="font-size: 27px;">高考志愿智能服务系统</cover-view>
   </cover-view>
   <view class="flex flex-direction justify-center margin-lg" style="width: 90%;">
-    <button class="cu-btn lg bg-orange margin  margin-tb-lg" style="width: 100%;border: 2px solid orange;" bindtap="toChatPage">
+    <button class="cu-btn lg bg-orange  margin  margin-tb-lg" style="width: 100%;" bindtap="toChatPage">
       <text class="cuIcon-community basis-xs"></text>
       <text class="basis-lg">聊天问答</text>
       <text class="cuIcon-right basis-xs"></text>

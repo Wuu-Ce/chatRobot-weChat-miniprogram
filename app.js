@@ -18,18 +18,18 @@ App({
       success (res) {
         if (res.code) {
           //发起网络请求
-          console.log(that.globalData.http)
           wx.request({
             url:  that.globalData.http + '/login',
             data: {
               code: res.code
             },
             success(res){
-              console.log(res)
+              console.log(res.data.userID)
               wx.setStorageSync({
                 key:'userID',
                 data:res.data.userID
               })
+              that.globalData.userInfo.userID=res.data.userID
             }
           })
         } else {
@@ -39,6 +39,7 @@ App({
     })
   },
   globalData: {
+    userInfo:{},
     http: 'http://yuxue0824.com'
   }
 })

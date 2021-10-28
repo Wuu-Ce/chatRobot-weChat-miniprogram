@@ -11,8 +11,14 @@ Page({
     inputValue: '',
     buttonDisable: true,
     userInfo: {
-
-    },  
+      nickName: '昵称',
+      avatarUrl: '',
+      gender: '性别',
+      country: '国家',
+      province: '省份',
+      city: '城市',
+      language: '语言'
+    },
     record: [{
         sender: 'robot',
         message: ' test1',
@@ -26,7 +32,7 @@ Page({
         date: ''
       },
       {
-        sender: 'self',
+        sender: 'Gnn',
         message: ' 长安大学有几个校区？',
         timeStamp: 1635060034502, // util.js_data_time( new Date().getTime(), 'Y/M/D')
         date: ''
@@ -50,6 +56,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
   },
 
   /**
@@ -57,6 +64,9 @@ Page({
    */
   onReady: function () {
     const that = this
+    this.setData({
+      userInfo: wx.getStorageSync('userInfo')
+    })
     wx.nextTick(() => {
       const requestAnimFrame = (function () {
         // 自执行函数
@@ -71,17 +81,19 @@ Page({
       setDateLoop()
     })
     console.log('userID:' + wx.getStorageSync('userID'))
+    console.log('id'+app.globalData.userInfo.userID)
     wx.request({
       url: app.globalData.http + '/chat/getChatRecords',
       data: {
-        userID: wx.getStorageSync('userID')
+        userID: app.globalData.userInfo.userID
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
       success(res) {
-        console.log(res)
+
+        console.log(res.data)
       }
     })
   },
@@ -160,7 +172,7 @@ Page({
     let that = this
     let time = new Date().getTime()
     this.data.record.push({
-      sender: 'self',
+      sender: that.data.userInfo.nickName,
       message: this.data.inputValue,
       timeStamp: time,
       date: this.formatDate(time),
@@ -174,10 +186,9 @@ Page({
     wx.request({
       url: app.globalData.http + '/chat/chatreply',
       data: {
-        userID: userID,
-         sender: 'user',
+        userID: app.globalData.userInfo.userID,
+         sender: that.data.userInfo.nickName,
         message: that.data.inputValue,
-        timeStamp: time
       },
       method: 'POST',
       header: {

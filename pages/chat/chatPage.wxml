@@ -7,7 +7,7 @@
 <view class="cu-chat" id="chatView">
   <!-- 自己 -->
   <view wx:for="{{record}}" wx:key="from">
-    <view wx:if="{{item.sender=='self'}}" class="cu-item self">
+    <view wx:if="{{item.sender==userInfo.nickName}}" class="cu-item self">
       <view class="main" style="display: block;">
         <view class="margin-tb-xs text-grey">{{item.sender}}</view>
         <view class="content bg-orange shadow">
@@ -15,7 +15,7 @@
         </view>
       </view>
       <view class="cu-avatar radius margin-tb-sm"
-        style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+        style="background-image:url({{userInfo.avatarUrl}});"></view>
       <view class="date"> {{item.date}}</view>
     </view>
     <!-- 对方 -->
@@ -39,6 +39,6 @@
   </view>
   <input id="input" type="text" class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" bindinput="InputIn"
     adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" value="{{inputValue}}"></input>
-  <button class="cu-btn bg-pink shadow" bindtap="sendMessage" style="width: 30vw;"
+  <button class="cu-btn bg-yellow shadow text-white" bindtap="sendMessage" style="width: 30vw;"
     disabled="{{buttonDisable}}">发送</button>
 </view>
