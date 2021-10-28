@@ -7,49 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userInfo: wx.getStorageSync('userInfo'),
     InputBottom: 0,
     inputValue: '',
     buttonDisable: true,
-    userInfo: {
-      nickName: '昵称',
-      avatarUrl: '',
-      gender: '性别',
-      country: '国家',
-      province: '省份',
-      city: '城市',
-      language: '语言'
-    },
-    record: [{
-        sender: 'robot',
-        message: ' test1',
-        timeStamp: 1634056139502,
-        date: ''
-      },
-      {
-        sender: 'robot',
-        message: ' test2',
-        timeStamp: 1634856139502,
-        date: ''
-      },
-      {
-        sender: 'Gnn',
-        message: ' 长安大学有几个校区？',
-        timeStamp: 1635060034502, // util.js_data_time( new Date().getTime(), 'Y/M/D')
-        date: ''
-      },
-      {
-        sender: 'robot',
-        message: ' 三个，分别是渭水校区、校本部北院教学区、雁塔校区和小寨校区。',
-        timeStamp: 1635065139502,
-        date: ''
-      },
-      {
-        sender: 'robot',
-        message: ' test',
-        timeStamp: 1635066139502,
-        date: ''
-      }
-    ]
+    record: []
   },
 
   /**
@@ -64,9 +26,7 @@ Page({
    */
   onReady: function () {
     const that = this
-    this.setData({
-      userInfo: wx.getStorageSync('userInfo')
-    })
+    //重新计算日期
     wx.nextTick(() => {
       const requestAnimFrame = (function () {
         // 自执行函数
@@ -75,25 +35,34 @@ Page({
         }
       })()
       const setDateLoop = function () {
-        that.formatRecordDate()
+        if(that.data.record.length>0){
+          that.formatRecordDate()
+        }
+        console.log('set time called')
+        console.log(that.data.record)
         requestAnimFrame(setDateLoop)
       }
       setDateLoop()
     })
-    console.log('userID:' + wx.getStorageSync('userID'))
-    console.log('id'+app.globalData.userInfo.userID)
+    //获取消息记录
+
     wx.request({
       url: app.globalData.http + '/chat/getChatRecords',
       data: {
-        userID: app.globalData.userInfo.userID
+        userID: that.data.userInfo.userID
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
       success(res) {
+        that.setData({
+          record: res.data
+        })
+        if(res.data.length != 0){
+             that.formatRecordDate()     
+        }
 
-        console.log(res.data)
       }
     })
   },
@@ -171,42 +140,45 @@ Page({
   sendMessage() {
     let that = this
     let time = new Date().getTime()
+    const message = this.data.inputValue
+
     this.data.record.push({
       sender: that.data.userInfo.nickName,
-      message: this.data.inputValue,
+      message: message,
       timeStamp: time,
       date: this.formatDate(time),
+      userID: app.globalData.userInfo.userID
     })
     this.setData({
       record: this.data.record,
       inputValue: '',
       buttonDisable: true
     })
-    const userID = wx.getStorageSync('userID')
+    //请求
     wx.request({
       url: app.globalData.http + '/chat/chatreply',
       data: {
         userID: app.globalData.userInfo.userID,
-         sender: that.data.userInfo.nickName,
-        message: that.data.inputValue,
+        sender: that.data.userInfo.nickName,
+        message: message
       },
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success(res) {
-        console.log(res.data.data)
-        res.data.data.time *= 1000
         that.data.record.push(res.data.data)
         that.setData({
           record: that.data.record
         })
-        console.log(that.data.record)
+
         that.ScrollToBottom()
+        console.log(that.data.record)
       }
     })
     this.ScrollToBottom()
   },
+  //滚动到底部
   ScrollToBottom() {
     wx.createSelectorQuery().select('#chatView').boundingClientRect(res => {
       // 到这里，我们可以从res中读到class为bb4的top，即离顶部的距离（px）
@@ -219,10 +191,15 @@ Page({
   },
   //重新继续日期
   formatRecordDate() {
-    const that = this
-    this.data.record.forEach(function (item) {
-      item.date = that.formatDate(item.timeStamp)
-    })
+    this.data.record[0].date = this.formatDate(this.data.record[0].timeStamp)
+    for (let i = 0; i < this.data.record.length; i++) {
+      if (i > 0 && this.data.record[i].timeStamp - this.data.record[i - 1].timeStamp > 120000) {
+        this.data.record[i].date = this.formatDate(this.data.record[i].timeStamp)
+      }
+    }
+    // this.data.record.forEach(function (item) {
+    //   item.date = that.formatDate(item.timeStamp)
+    // })
     this.setData({
       record: this.data.record
     })
@@ -231,6 +208,7 @@ Page({
   formatDate(time) {
     const nowTime = new Date().getTime()
     let beetwn = nowTime - time
+    console.log('beetwn' + beetwn)
     if (beetwn < 60000) {
       return ('')
     } else if (beetwn >= 60000 && beetwn < 3600000) {

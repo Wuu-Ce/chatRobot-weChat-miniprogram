@@ -13,8 +13,8 @@ Page({
       province: '省份',
       city: '城市',
       language: '语言'
-    }
-
+    },
+    collections:[]
   },
 
   /**
@@ -30,7 +30,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    //
   },
 
   /**

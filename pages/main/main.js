@@ -1,5 +1,6 @@
 // pages/main/main.js
 const utils = require('../../utils/util.js')
+const app = getApp()
 Page({
 
   /**

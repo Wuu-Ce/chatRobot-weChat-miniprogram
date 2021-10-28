@@ -17,18 +17,13 @@ App({
     wx.login({
       success (res) {
         if (res.code) {
-          //发起网络请求
+          //发起登录网络请求
           wx.request({
             url:  that.globalData.http + '/login',
             data: {
               code: res.code
             },
             success(res){
-              console.log(res.data.userID)
-              wx.setStorageSync({
-                key:'userID',
-                data:res.data.userID
-              })
               that.globalData.userInfo.userID=res.data.userID
             }
           })

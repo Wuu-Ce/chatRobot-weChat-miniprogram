@@ -1,11 +1,26 @@
 // pages/collection/collection.js
+const utils = require('../../utils/util.js')
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    collections:[{
+      sender: 'robot',
+      userID: '1',
+      img: '',
+      message: 'tes message',
+      timeStamp: 1635422899097
+    },
+    {
+      sender: 'robot',
+      userID: '1',
+      img: '',
+      message: 'tes message, for 和 for/in 语句都可以迭代数组。for 语句需要配合 length 属性和数组下标来实现，执行效率没有 for/in 语句高。另外，for/in 语句会跳过空元素。',
+      timeStamp: 1635422899097
+    }]
   },
 
   /**
@@ -19,7 +34,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    if(this.data.collections.length){
+      this.formatAllDate()
+    }
   },
 
   /**
@@ -62,5 +79,13 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  formatAllDate(){
+    this.data.collections.forEach(function(value, index, array){
+      value.date = utils.js_date_time(value.timeStamp, 'Y/M/D h:m')
+    })
+    this.setData({
+      collections: this.data.collections
+    })
   }
 })

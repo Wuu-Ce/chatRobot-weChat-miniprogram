@@ -4,25 +4,21 @@
   <view slot="content">图标</view>
 </cu-custom>
 <view class="cu-card dynamic radius">
-  <view class="cu-item shadow">
+  <view wx:for="{{collections}}" wx:for-index="index" wx:key="timeStamp" class="cu-item shadow">
     <view class="content padding">
-      <view class="flex solid-bottom justify-between text-xl">
-        <view class="text-grey ">问题1</view>
-        <text class="cuIcon-delete text-gray"></text>
-      </view>
-      <view class="text-gray text-content text-df padding-tb-sm">
-       问： 长安大学有几个校区？
+      <view class="flex solid-bottom justify-between text-xl margin-tb-sm">
+        <view class="cu-tag round bg-blue light margin-lr-sm">{{index + 1}}</view>
+        <text class="cuIcon-delete text-cyan lg" style="font-weight: bold;"></text>
       </view>
       <view class="bg-grey padding-sm radius">
         <view class="flex">
-          <view>答：</view>
-          <view class="flex-sub">三个，分别是渭水校区、校本部北院教学区、雁塔校区和小寨校区。</view>
+          <view class="flex-sub">{{item.message}}</view>
         </view>
       </view>
       <view class="margin-top-sm flex justify-between">
         <view class=""></view>
         <view>
-          <text class="text-gray text-df">2018年12月4日</text>
+          <text class="text-gray text-df">——{{item.sender}} {{item.date}}</text>
         </view>
       </view>
     </view>

@@ -40,10 +40,10 @@
     </button>
   </view>
 </view>
-<view class="cu-list menu margin-tb-xl" style="margin-top:50rpx ;">
+<!-- <view class="cu-list menu margin-tb-xl" style="margin-top:50rpx ;">
   <view class="cu-item" style="padding: 0;">
     <button class="cu-btn  text-orange text-lg bg-white" style="width:100%;" bindtap="logout">
       退出登录
     </button>
   </view>
-</view>
+</view> -->
