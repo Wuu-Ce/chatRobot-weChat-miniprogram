@@ -173,5 +173,15 @@ Page({
       url: '../user/user',
       success: function (res) {}
     })
-  }
+  },
+  showModal(e) {
+    this.setData({
+      modalName: 'e.currentTarget.dataset.target'
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
 })

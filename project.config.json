@@ -41,7 +41,7 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.20.0",
+  "libVersion": "2.19.2",
   "appid": "wxdbe4feba944f9d5c",
   "projectname": "chat",
   "debugOptions": {

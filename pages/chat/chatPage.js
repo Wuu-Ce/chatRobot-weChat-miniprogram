@@ -35,34 +35,33 @@ Page({
         }
       })()
       const setDateLoop = function () {
-        if(that.data.record.length>0){
+        if (that.data.record.length > 0) {
           that.formatRecordDate()
         }
-        console.log('set time called')
-        console.log(that.data.record)
         requestAnimFrame(setDateLoop)
       }
       setDateLoop()
     })
     //获取消息记录
-
     wx.request({
-      url: app.globalData.http + '/chat/getChatRecords',
+      url: app.globalData.http + '/chat/getChatRecords/',
       data: {
-        userID: that.data.userInfo.userID
+        userID: wx.getStorageSync('userID')
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
       success(res) {
-        that.setData({
-          record: res.data
-        })
-        if(res.data.length != 0){
-             that.formatRecordDate()     
+        if (typeof res.data != 'string') {
+          that.setData({
+            record: res.data
+          })
+          if (res.data.length != 0) {
+            that.formatRecordDate()
+            that.ScrollToBottom()
+          }
         }
-
       }
     })
   },
@@ -108,6 +107,7 @@ Page({
   onShareAppMessage: function () {
 
   },
+  //发送按钮相关事件
   InputFocus(e) {
     this.setData({
       InputBottom: e.detail.height
@@ -146,8 +146,7 @@ Page({
       sender: that.data.userInfo.nickName,
       message: message,
       timeStamp: time,
-      date: this.formatDate(time),
-      userID: app.globalData.userInfo.userID
+      userID: wx.getStorageSync('userID')
     })
     this.setData({
       record: this.data.record,
@@ -156,9 +155,9 @@ Page({
     })
     //请求
     wx.request({
-      url: app.globalData.http + '/chat/chatreply',
+      url: app.globalData.http + '/chat/chatreply/',
       data: {
-        userID: app.globalData.userInfo.userID,
+        userID: wx.getStorageSync('userID'),
         sender: that.data.userInfo.nickName,
         message: message
       },
@@ -167,13 +166,13 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success(res) {
-        that.data.record.push(res.data.data)
-        that.setData({
-          record: that.data.record
-        })
-
-        that.ScrollToBottom()
-        console.log(that.data.record)
+        if (res.data.data) {
+          that.data.record.push(res.data.data)
+          that.setData({
+            record: that.data.record
+          })
+          that.ScrollToBottom()
+        }
       }
     })
     this.ScrollToBottom()
@@ -208,7 +207,6 @@ Page({
   formatDate(time) {
     const nowTime = new Date().getTime()
     let beetwn = nowTime - time
-    console.log('beetwn' + beetwn)
     if (beetwn < 60000) {
       return ('')
     } else if (beetwn >= 60000 && beetwn < 3600000) {

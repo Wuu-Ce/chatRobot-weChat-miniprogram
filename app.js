@@ -19,12 +19,16 @@ App({
         if (res.code) {
           //发起登录网络请求
           wx.request({
-            url:  that.globalData.http + '/login',
+            url:  that.globalData.http + '/login/',
             data: {
               code: res.code
             },
-            success(res){
-              that.globalData.userInfo.userID=res.data.userID
+            success(res1) {
+              wx.setStorageSync('userID', res1.data.userID)
+              that.globalData.userInfo.userID = res1.data.userID
+            },
+            fail() {
+              console.log('login fail')
             }
           })
         } else {
@@ -34,7 +38,7 @@ App({
     })
   },
   globalData: {
-    userInfo:{},
-    http: 'http://yuxue0824.com'
+    userInfo:{userInfo:{userID:1}},
+    http: 'https://yuxue0824.com'
   }
 })

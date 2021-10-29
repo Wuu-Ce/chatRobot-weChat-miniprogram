@@ -30,11 +30,11 @@
   <view class="cu-item">
     <button class="cu-btn bg-white  padding-lr-sm" style="width:100%;justify-content: space-between;" bindtap="TocollectionPage">
       <view>
-      <text class="cuIcon-crownfill text-blue margin-lr-sm"></text>
+      <text class="cuIcon-crownfill text-yellow margin-lr-sm"></text>
       <text class="text-grey text-lg">收藏</text>
       </view>
       <view class="action">
-        <view class="cu-tag round bg-cyan light margin-lr-sm">19条</view>
+        <!-- <view class="cu-tag round bg-cyan light margin-lr-sm">19条</view> -->
         <text class="cuIcon-right text-cyan"></text>
       </view>
     </button>

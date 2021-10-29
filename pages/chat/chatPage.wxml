@@ -6,8 +6,8 @@
 
 <view class="cu-chat" id="chatView">
   <!-- 自己 -->
-  <view wx:for="{{record}}" wx:key="timeStamp">
-    <view wx:if="{{item.date}}" class="flex justify-center">
+  <view wx:for="{{record}}" wx:key="timeStamp" >
+    <view wx:if="{{item.date}}" class="flex justify-center margin-tb-sm">
       <view class="text-grey">{{item.date}}</view>
     </view>
     <view wx:if="{{item.sender==userInfo.nickName}}" class="cu-item self" style="padding-bottom: 30rpx;">
